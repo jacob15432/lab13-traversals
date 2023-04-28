@@ -133,6 +133,20 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	//Print the current node first and then recurse on the children
 	public void preOrderStack() {
 		Stack<BSTNode<T>> pre = new Stack<BSTNode<T>>();
+		pre.push(root);
+
+	    while (!pre.empty()) {
+	        BSTNode<T> node = pre.pop();
+	        System.out.print(node.data + " "); 
+
+	        if (node.rightChild != null) {
+	            pre.push(node.rightChild);
+	        }
+
+	        if (node.leftChild != null) {
+	            pre.push(node.leftChild);
+	        }
+	    }
 		
 	}
 		
@@ -158,7 +172,17 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	//Traverse the tree in an inorder fashion but using a stack
 	public void inOrderStack() {
 		Stack<BSTNode<T>> in = new Stack<BSTNode<T>>();
-		
+		BSTNode<T> curr = root;
+	    while (!in.isEmpty() || curr != null) {
+	        if (curr != null) {
+	            in.push(curr);
+	            curr = curr.leftChild;
+	        } else {
+	            BSTNode<T> node = in.pop();
+	            System.out.print(node.data + " ");
+	            curr = node.rightChild;
+	        }
+	    }
 		
 	}
 	
@@ -190,6 +214,16 @@ public class BinarySearchTree<T extends Comparable<T>> {
 			postHelper.push(root);
 			while(!postHelper.isEmpty()) {
 				//how should post and postHelper be updated?
+				BSTNode<T> node = postHelper.pop();
+		        post.push(node);
+
+		        if (node.leftChild != null) {
+		            postHelper.push(node.leftChild);
+		        }
+
+		        if (node.rightChild != null) {
+		            postHelper.push(node.rightChild);
+		        }
 			}
 			
 			while(!post.isEmpty()) {
